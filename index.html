@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>تم اختراقك!</title>
+  <style>
+    body {
+      background-color: black;
+      color: red;
+      font-family: 'Courier New', Courier, monospace;
+      text-align: center;
+      padding-top: 20vh;
+      animation: flicker 1s infinite alternate;
+    }
+
+    h1 {
+      font-size: 4em;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px red, 0 0 20px red;
+    }
+
+    p {
+      font-size: 1.5em;
+    }
+
+    @keyframes flicker {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    .terminal {
+      background-color: #111;
+      color: #0f0;
+      border: 2px solid #0f0;
+      padding: 20px;
+      width: 60%;
+      margin: 40px auto;
+      font-size: 1.2em;
+      text-align: left;
+      box-shadow: 0 0 20px #0f0;
+    }
+
+    .blink {
+      animation: blink-cursor 1s step-start infinite;
+    }
+
+    @keyframes blink-cursor {
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>تم اختراقك بنجاح</h1>
+
+
+  <div class="terminal">
+    <p>accessing files...</p>
+    <p>stealing cookies...</p>
+    <p>injecting laughter.js...</p>
+    <p><span class="blink">█</span></p>
+  </div>
+
+</body>
+</html>
