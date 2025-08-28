@@ -2,65 +2,88 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>تم اختراقك!</title>
+  <title>تم الاختراق</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- مهم للهواتف -->
   <style>
     body {
-      background-color: black;
-      color: red;
-      font-family: 'Courier New', Courier, monospace;
-      text-align: center;
-      padding-top: 20vh;
-      animation: flicker 1s infinite alternate;
+      margin: 0;
+      overflow: hidden;
+      background: black;
+      font-family: monospace;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
     }
 
     h1 {
-      font-size: 4em;
-      margin-bottom: 20px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: red;
+      font-size: clamp(24px, 6vw, 60px); /* يتغير مع حجم الشاشة */
+      text-align: center;
       text-shadow: 0 0 10px red, 0 0 20px red;
+      z-index: 2;
+      animation: glitchText 1.2s infinite;
+      white-space: nowrap;
     }
 
-    p {
-      font-size: 1.5em;
-    }
-
-    @keyframes flicker {
-      0% { opacity: 1; }
-      50% { opacity: 0.5; }
-      100% { opacity: 1; }
-    }
-
-    .terminal {
-      background-color: #111;
-      color: #0f0;
-      border: 2px solid #0f0;
-      padding: 20px;
-      width: 60%;
-      margin: 40px auto;
-      font-size: 1.2em;
-      text-align: left;
-      box-shadow: 0 0 20px #0f0;
-    }
-
-    .blink {
-      animation: blink-cursor 1s step-start infinite;
-    }
-
-    @keyframes blink-cursor {
-      50% { opacity: 0; }
+    @keyframes glitchText {
+      0% { text-shadow: 2px 2px red, -2px -2px blue; }
+      20% { text-shadow: -2px -2px red, 2px 2px blue; }
+      40% { text-shadow: 3px -3px lime, -3px 3px red; }
+      60% { text-shadow: -3px 3px red, 3px -3px blue; }
+      80% { text-shadow: 2px -2px red, -2px 2px blue; }
+      100% { text-shadow: 0 0 10px red, 0 0 20px red; }
     }
   </style>
 </head>
 <body>
+  <canvas id="matrix"></canvas>
+  <h1>Hacking</h1>
 
-  <h1>تم اختراقك بنجاح</h1>
+  <script>
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
 
+    function resizeCanvas() {
+      canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth;
+    }
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
 
-  <div class="terminal">
-    <p>accessing files...</p>
-    <p>stealing cookies...</p>
-    <p>injecting laughter.js...</p>
-    <p><span class="blink">█</span></p>
-  </div>
+    const letters = "01#@$%&*ABCXYZ";
+    const fontSize = 16;
+    let columns = Math.floor(canvas.width / fontSize);
 
+    const drops = [];
+    for (let x = 0; x < columns; x++) drops[x] = 1;
+
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#0F0";
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 33);
+  </script>
 </body>
 </html>
